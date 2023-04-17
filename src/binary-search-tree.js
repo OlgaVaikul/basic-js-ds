@@ -2,15 +2,15 @@ const { Node } = require('../extensions/list-tree.js');
 
 class BinarySearchTree {
   constructor() {
-    this.root = null;
+    this.rootData = null;
   }
 
   root() {
-    return this.root;
+    return this.rootData;
   }
 
   add(data) {
-    this.root = addNum(this.root, data);
+    this.rootData = addNum(this.rootData, data);
 
     function addNum(node, data) {
       if(!node) {
@@ -29,7 +29,7 @@ class BinarySearchTree {
   }
 
   has(data) {
-    return searchNum(this.root, data);
+    return searchNum(this.rootData, data);
 
     function searchNum(node, data) {
       if(!node) {
@@ -38,14 +38,17 @@ class BinarySearchTree {
       if (node.data === data) {
         return true;
       }
-      return data < node.data ?
-      searchNum(node.left, data):
-      searchNum(node.right, data);
+      
+      if (data > node.data) {
+        return searchNum(node.right, data);
+      } else {
+        return searchNum(node.left, data);
+      }
   }
   }
 
   find(data) {
-    return findNum(this.root, data);
+    return findNum(this.rootData, data);
 
     function findNum(node, data) {
       if (!node) {
@@ -65,7 +68,7 @@ class BinarySearchTree {
   }
 
   remove(data) {
-    this.root = removeNum(this.root, data);
+    this.rootData = removeNum(this.rootData, data);
 
     function removeNum(node, data) {
       if (!node) {
@@ -106,29 +109,29 @@ class BinarySearchTree {
   }
 
   min() {
-    if (!this.root) {
-      return;
+    if (!this.rootData) {
+      return null;
     }
 
-    let node = this.root;
-    while (node.left) {
-      node = node.left;
+    let minNode = this.rootData;
+    while (minNode.left) {
+      minNode = minNode.left;
     }
 
-    return node.data;
+    return minNode.data;
   }
 
   max() {
-    if (!this.root) {
-      return;
+    if (!this.rootData) {
+      return null;
     }
 
-    let node = this.root;
-    while (node.right) {
-      node = node.right;
+    let maxNode = this.rootData;
+    while (maxNode.right) {
+      maxNode = maxNode.right;
     }
 
-    return node.data;
+    return maxNode.data;
   }
 
 }
